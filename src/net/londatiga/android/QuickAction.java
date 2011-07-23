@@ -53,6 +53,14 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	public static final int ANIM_GROW_FROM_CENTER = 3;
 	public static final int ANIM_AUTO = 4;
 	
+	private int animStyle;
+	private boolean animateTrack;
+	private ViewGroup mTrack;
+	private ArrayList<ActionItem> actionList;
+	
+    private int yPos;
+    private int arrowXPos;
+
 	/**
 	 * Constructor.
 	 * 
@@ -221,17 +229,17 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		//int screenHeight 	= mWindowManager.getDefaultDisplay().getHeight();
 
 		int xPos 			= (screenWidth - rootWidth) / 2;
-		int yPos	 		= anchorRect.top - rootHeight;
+		//int yPos	 		= anchorRect.top - rootHeight;
 
 		boolean onTop		= true;
 		
 		// display on bottom
 		if (rootHeight > anchor.getTop()) {
-			yPos 	= anchorRect.bottom;
+			//yPos 	= anchorRect.bottom;
 			onTop	= false;
 		}
 
-		showArrow(((onTop) ? R.id.arrow_down : R.id.arrow_up), anchorRect.centerX());
+        showArrow(((onTop) ? R.id.arrow_down : R.id.arrow_up), arrowXPos);
 		
 		setAnimationStyle(screenWidth, anchorRect.centerX(), onTop);
 	
@@ -329,4 +337,9 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	public interface OnDismissListener {
 		public abstract void onDismiss();
 	}
+
+    public void setLocation(int arrowXPos, int yPos) {
+        this.arrowXPos = arrowXPos;
+        this.yPos = yPos;
+    }
 }
