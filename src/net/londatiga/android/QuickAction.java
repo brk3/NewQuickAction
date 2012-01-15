@@ -53,11 +53,6 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	public static final int ANIM_GROW_FROM_CENTER = 3;
 	public static final int ANIM_AUTO = 4;
 	
-	private int animStyle;
-	private boolean animateTrack;
-	private ViewGroup mTrack;
-	private ArrayList<ActionItem> actionList;
-	
     private int yPos;
     private int arrowXPos;
 
