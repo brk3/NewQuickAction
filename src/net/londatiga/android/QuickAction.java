@@ -53,9 +53,6 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	public static final int ANIM_GROW_FROM_CENTER = 3;
 	public static final int ANIM_AUTO = 4;
 	
-    private int yPos;
-    private int arrowXPos;
-
 	/**
 	 * Constructor.
 	 * 
@@ -199,6 +196,11 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		mItemClickListener = listener;
 	}
 	
+    private Rect anchorRect = null;
+    public void setAnchorRect(Rect anchorRect) {
+        this.anchorRect = anchorRect;
+    }
+
 	/**
 	 * Show popup mWindow
 	 */
@@ -211,7 +213,8 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		
 		anchor.getLocationOnScreen(location);
 
-		Rect anchorRect 	= new Rect(location[0], location[1], location[0] + anchor.getWidth(), location[1] 
+        if (anchorRect == null)
+            anchorRect 	= new Rect(location[0], location[1], location[0] + anchor.getWidth(), location[1] 
 		                	+ anchor.getHeight());
 
 		//mRootView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
@@ -224,17 +227,17 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 		//int screenHeight 	= mWindowManager.getDefaultDisplay().getHeight();
 
 		int xPos 			= (screenWidth - rootWidth) / 2;
-		//int yPos	 		= anchorRect.top - rootHeight;
+		int yPos	 		= anchorRect.top - rootHeight;
 
 		boolean onTop		= true;
 		
 		// display on bottom
 		if (rootHeight > anchor.getTop()) {
-			//yPos 	= anchorRect.bottom;
+			yPos 	= anchorRect.bottom;
 			onTop	= false;
 		}
 
-        showArrow(((onTop) ? R.id.arrow_down : R.id.arrow_up), arrowXPos);
+		showArrow(((onTop) ? R.id.arrow_down : R.id.arrow_up), anchorRect.centerX());
 		
 		setAnimationStyle(screenWidth, anchorRect.centerX(), onTop);
 	
@@ -332,9 +335,4 @@ public class QuickAction extends PopupWindows implements OnDismissListener {
 	public interface OnDismissListener {
 		public abstract void onDismiss();
 	}
-
-    public void setLocation(int arrowXPos, int yPos) {
-        this.arrowXPos = arrowXPos;
-        this.yPos = yPos;
-    }
 }
